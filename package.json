@@ -6,7 +6,7 @@
 
   "name": "ng-html2js",
   "description": "Standalone script to turn Angular template into js and put it in a module.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -29,7 +29,7 @@
   },
 
   "bin": {
-    "ng-html2js": "./src/ng-html2js"
+    "ng-html2js": "./bin/ng-html2js"
   },
   "scripts": {
     "test": "mocha --require should --reporter spec"

@@ -3,7 +3,7 @@
 var fs       = require('fs');
 var optimist = require('optimist');
 
-var html2js = require('./html2js');
+var html2js = require('../src/html2js');
 
 
 
