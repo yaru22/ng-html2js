@@ -1,0 +1,46 @@
+#!/usr/bin/env node
+
+var fs       = require('fs');
+var optimist = require('optimist');
+
+var html2js = require('./html2js');
+
+
+
+//
+// Setup usage and parse arguments
+//
+
+var argv = optimist.usage('Usage: $0 <input file> <output file>')
+    // -m, --module option
+    .alias('m', 'module')
+    .string('m')
+    .describe('m', 'If module name is provided, template will be packaged under this module.')
+    // -h, --help option
+    .alias('h', 'help')
+    .boolean('h')
+    .describe('h', 'Shows usage message; what you are looking at.')
+    .argv;
+
+if (argv._.length === 0 || argv.help) {
+  console.log(optimist.help());
+  process.exit();
+}
+
+var inputFile = argv._[0];
+var outputFile = argv._[1];
+var moduleName = argv.m;
+
+
+//
+// Main script
+//
+
+var content = fs.readFileSync(inputFile, 'utf8');
+var output = html2js(inputFile, content, moduleName);
+
+if (outputFile) {
+  fs.writeFileSync(outputFile, output, 'utf8');
+} else {
+  console.log(output);
+}
