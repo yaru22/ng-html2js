@@ -1,5 +1,8 @@
 ng-html2js
 ==========
+[![Build Status](https://secure.travis-ci.org/yaru22/ng-html2js.png)](http://travis-ci.org/yaru22/ng-html2js)
+[![Dependency Status](https://gemnasium.com/yaru22/ng-html2js.png)](https://gemnasium.com/yaru22/ng-html2js)
+
 Standalone script to turn Angular template into js and put it in a module.
 
 
