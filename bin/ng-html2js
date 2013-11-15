@@ -2,6 +2,7 @@
 
 var fs       = require('fs');
 var optimist = require('optimist');
+var path = require('path');
 
 var html2js = require('../src/html2js');
 
@@ -43,7 +44,8 @@ var baseDir = argv.b;
 var content = fs.readFileSync(inputFile, 'utf8');
 var inputAlias = inputFile;
 if(baseDir){
-  inputAlias = inputAlias.replace(baseDir, '/');
+  baseDir = path.resolve(baseDir);
+  inputAlias = inputAlias.replace(baseDir, '');
 }
 inputAlias = inputAlias.replace(/\\/g, '/');
 var output = html2js(inputAlias, content, moduleName);
