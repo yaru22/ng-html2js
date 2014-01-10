@@ -1,4 +1,4 @@
-ng-html2js
+ng-html2js [![Analytics](https://ga-beacon.appspot.com/UA-2694988-7/ng-html2js/readme?pixel)](https://github.com/yaru22/ng-html2js)
 ==========
 [![Build Status](https://secure.travis-ci.org/yaru22/ng-html2js.png)](http://travis-ci.org/yaru22/ng-html2js)
 [![Dependency Status](https://gemnasium.com/yaru22/ng-html2js.png)](https://gemnasium.com/yaru22/ng-html2js)
