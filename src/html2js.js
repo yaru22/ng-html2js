@@ -15,9 +15,9 @@ var util = require('util');
 // Constants
 //
 
-var TEMPLATE = 'angular.module(\'%s\', []).run(function($templateCache) {\n' +
+var TEMPLATE = 'angular.module(\'%s\', []).run(["$templateCache", function($templateCache) {\n' +
     '  $templateCache.put(\'%s\',\n    \'%s\');\n' +
-    '});\n';
+    '}]);\n';
 
 var SINGLE_MODULE_TPL = '(function(module) {\n' +
     'try {\n' +
@@ -25,9 +25,9 @@ var SINGLE_MODULE_TPL = '(function(module) {\n' +
     '} catch (e) {\n' +
     '  module = angular.module(\'%s\', []);\n' +
     '}\n' +
-    'module.run(function($templateCache) {\n' +
+    'module.run(["$templateCache", function($templateCache) {\n' +
     '  $templateCache.put(\'%s\',\n    \'%s\');\n' +
-    '});\n' +
+    '}]);\n' +
     '})();\n';
 
 

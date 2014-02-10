@@ -1,4 +1,4 @@
-angular.module('test/test.tmpl', []).run(function($templateCache) {
+angular.module('test/test.tmpl', []).run(["$templateCache", function($templateCache) {
   $templateCache.put('test/test.tmpl',
     '<div>\n' +
     '  hello world\n' +
@@ -7,4 +7,4 @@ angular.module('test/test.tmpl', []).run(function($templateCache) {
     '  </div>\n' +
     '</div>\n' +
     '');
-});
+}]);
