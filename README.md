@@ -17,7 +17,7 @@ If you specify only inputFile, it will display the result to the console.
 If you don't specify moduleName, inputFile will be the name of the module.
 ```
 $ ng-html2js test/test.tmpl
-angular.module('test/test.tmpl', []).run(function($templateCache) {
+angular.module('test/test.tmpl', []).run(["$templateCache", function($templateCache) {
   $templateCache.put('test/test.tmpl',
     '<div>\n' +
     '  hello world\n' +
@@ -26,7 +26,7 @@ angular.module('test/test.tmpl', []).run(function($templateCache) {
     '  </div>\n' +
     '</div>\n' +
     '');
-});
+}]);
 ```
 
 If you specify moduleName, the template will belong to that module.
@@ -38,7 +38,7 @@ try {
 } catch (e) {
   module = angular.module('foo', []);
 }
-module.run(function($templateCache) {
+module.run(["$templateCache", function($templateCache) {
   $templateCache.put('test/test.tmpl',
     '<div>\n' +
     '  hello world\n' +
@@ -47,7 +47,7 @@ module.run(function($templateCache) {
     '  </div>\n' +
     '</div>\n' +
     '');
-});
+}]);
 })();
 ```
 
