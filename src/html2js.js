@@ -28,7 +28,7 @@ var SINGLE_MODULE_TPL = '(function(module) {\n' +
     'module.run(["$templateCache", function($templateCache) {\n' +
     '  $templateCache.put(\'%s\',\n    \'%s\');\n' +
     '}]);\n' +
-    '})();\n';
+    '})(%s);\n';
 
 
 //
@@ -44,12 +44,13 @@ var escapeContent = function(content) {
 // Main script
 //
 
-module.exports = function (fileName, content, moduleName) {
+module.exports = function (fileName, content, moduleName, moduleVar) {
   var escapedContent = escapeContent(content);
 
   var output = null;
   if (moduleName) {
-    output = util.format(SINGLE_MODULE_TPL, moduleName, moduleName, fileName, escapedContent);
+    moduleVar = moduleVar || 'module';
+    output = util.format(SINGLE_MODULE_TPL, moduleName, moduleName, fileName, escapedContent, moduleVar);
   } else {
     output = util.format(TEMPLATE, fileName, fileName, escapedContent);
   }

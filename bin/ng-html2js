@@ -17,6 +17,9 @@ var argv = optimist.usage('Usage: $0 <input file> <output file>')
     .alias('m', 'module')
     .string('m')
     .describe('m', 'If module name is provided, template will be packaged under this module.')
+    // --module-var option
+    .string('module-var')
+    .describe('module-var', '--module-var is to be used with --module. If module-var is provided, it will pass module-var to immediately-invoked function expression (IIFE). Its default value is "module".')
     // -b, --basedir option
     .alias('b', 'basedir')
     .string('b')
@@ -35,6 +38,7 @@ if (argv._.length === 0 || argv.help) {
 var inputFile = argv._[0];
 var outputFile = argv._[1];
 var moduleName = argv.m;
+var moduleVar = argv['module-var'];
 var baseDir = argv.b;
 
 //
@@ -48,7 +52,7 @@ if(baseDir){
   inputAlias = inputAlias.replace(baseDir, '');
 }
 inputAlias = inputAlias.replace(/\\/g, '/');
-var output = html2js(inputAlias, content, moduleName);
+var output = html2js(inputAlias, content, moduleName, moduleVar);
 
 if (outputFile) {
   fs.writeFileSync(outputFile, output, 'utf8');

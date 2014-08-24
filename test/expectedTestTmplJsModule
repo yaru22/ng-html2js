@@ -14,4 +14,4 @@ module.run(["$templateCache", function($templateCache) {
     '</div>\n' +
     '');
 }]);
-})();
+})(ngModule);
