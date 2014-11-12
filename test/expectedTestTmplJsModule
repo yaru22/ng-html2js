@@ -1,10 +1,11 @@
-(function(module) {
+var ngModule;
 try {
-  module = angular.module('foo');
+  ngModule = angular.module('foo');
 } catch (e) {
-  module = angular.module('foo', []);
+  ngModule = angular.module('foo', []);
 }
-module.run(["$templateCache", function($templateCache) {
+
+ngModule.run(['$templateCache', function ($templateCache) {
   $templateCache.put('test/test.tmpl',
     '<div>\n' +
     '  hello world\n' +
@@ -14,4 +15,3 @@ module.run(["$templateCache", function($templateCache) {
     '</div>\n' +
     '');
 }]);
-})(ngModule);

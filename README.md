@@ -32,13 +32,14 @@ angular.module('test/test.tmpl', []).run(["$templateCache", function($templateCa
 If you specify moduleName, the template will belong to that module.
 ```
 $ ng-html2js test/test.tmpl -m foo --module-var ngModule
-(function(module) {
+var ngModule;
 try {
-  module = angular.module('foo');
+  ngModule = angular.module('foo');
 } catch (e) {
-  module = angular.module('foo', []);
+  ngModule = angular.module('foo', []);
 }
-module.run(["$templateCache", function($templateCache) {
+
+ngModule.run(['$templateCache', function ($templateCache) {
   $templateCache.put('test/test.tmpl',
     '<div>\n' +
     '  hello world\n' +
@@ -48,7 +49,6 @@ module.run(["$templateCache", function($templateCache) {
     '</div>\n' +
     '');
 }]);
-})(ngModule);
 ```
 
 
