@@ -38,8 +38,8 @@ module.exports = function (fileName, content, moduleName, moduleVar) {
   var escapedContent = escapeContent(content);
 
   var output = null;
+  moduleVar = moduleVar || 'module';
   if (moduleName) {
-    moduleVar = moduleVar || 'module';
     output = util.format(SINGLE_MODULE_TMPL,
         moduleVar,
         moduleVar, moduleName,
@@ -47,7 +47,7 @@ module.exports = function (fileName, content, moduleName, moduleVar) {
         moduleVar,
         fileName, escapedContent);
   } else {
-    output = util.format(TMPL, fileName, fileName, escapedContent);
+    output = util.format(TMPL, moduleVar, fileName, moduleVar, fileName, escapedContent);
   }
 
   return output;

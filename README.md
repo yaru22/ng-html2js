@@ -17,7 +17,8 @@ If you specify only inputFile, it will display the result to the console.
 If you don't specify moduleName, inputFile will be the name of the module.
 ```
 $ ng-html2js test/test.tmpl
-angular.module('test/test.tmpl', []).run(["$templateCache", function($templateCache) {
+var module = angular.module('test/test.tmpl', []);
+module.run(['$templateCache', function($templateCache) {
   $templateCache.put('test/test.tmpl',
     '<div>\n' +
     '  hello world\n' +

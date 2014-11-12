@@ -1,4 +1,5 @@
-angular.module('test/test.tmpl', []).run(['$templateCache', function($templateCache) {
+var ngModule = angular.module('test/test.tmpl', []);
+ngModule.run(['$templateCache', function($templateCache) {
   $templateCache.put('test/test.tmpl',
     '<div>\n' +
     '  hello world\n' +
