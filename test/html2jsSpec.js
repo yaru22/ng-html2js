@@ -4,7 +4,7 @@
 var fs = require('fs');
 
 var html2js = require('../src/html2js.js');
-
+var should = require('should');
 
 
 describe('html2js', function() {
