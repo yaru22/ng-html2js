@@ -2,11 +2,8 @@
 
 var fs       = require('fs');
 var optimist = require('optimist');
-var path = require('path');
-
-var html2js = require('../src/html2js');
-
-
+var path     = require('path');
+var html2js  = require('../src/html2js');
 
 //
 // Setup usage and parse arguments
@@ -24,7 +21,11 @@ var argv = optimist.usage('Usage: $0 <input file> <output file>')
     .alias('b', 'basedir')
     .string('b')
     .describe('b', 'If basedir is provided, basedir will be removed from the templates\' path.')
-    // -h, --help option
+    // -s, --strip-prefix option
+    .alias('s', 'strip-prefix')
+    .string('s')
+    .describe('s', 'If strip-prefix is provided, strip-prefix will remove the given prefix from the filename')
+     // -h, --help option
     .alias('h', 'help')
     .boolean('h')
     .describe('h', 'Shows usage message; what you are looking at.')
@@ -40,16 +41,26 @@ var outputFile = argv._[1];
 var moduleName = argv.m;
 var moduleVar = argv['module-var'];
 var baseDir = argv.b;
+var prefixToStrip = argv.s;
 
 //
 // Main script
 //
+
+var wordsMatchLeftJustified = function(word1, word2) {
+  return word1.slice(0, word2.length) === word2;
+};
 
 var content = fs.readFileSync(inputFile, 'utf8');
 var inputAlias = inputFile;
 if(baseDir){
   baseDir = path.resolve(baseDir);
   inputAlias = inputAlias.replace(baseDir, '');
+}
+if (prefixToStrip) {
+  if(wordsMatchLeftJustified(inputAlias, prefixToStrip) && (prefixToStrip !== inputAlias)) {
+    inputAlias = inputAlias.replace(prefixToStrip, '');
+  }
 }
 inputAlias = inputAlias.replace(/\\/g, '/');
 var output = html2js(inputAlias, content, moduleName, moduleVar);
