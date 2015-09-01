@@ -83,25 +83,63 @@ describe('ng-html2js', function() {
 
     describe('when the user provides a relative path to the input file and an absolute subpath to be stripped from the file name', function() {
       it('does not strip anything from the file name', function() {
-          var returnValue = exec("./bin/ng-html2js spec/test.tmpl -b `pwd`/spec/", {silent: true});
-          var fileContents = cat("spec/expectedTestTmplJs");
-          expect(returnValue.output).toEqual(fileContents);
+        var returnValue = exec("./bin/ng-html2js spec/test.tmpl -b `pwd`/spec/", {silent: true});
+        var fileContents = cat("spec/expectedTestTmplJs");
+        expect(returnValue.output).toEqual(fileContents);
       });
     });
 
     describe('when the user provides an absolute path to the input file and a relative subpath to be stripped from the file name', function() {
       it('strips the provided relative subpath from the file name but keeps the trailing slash', function() {
-          var returnValue = exec("./bin/ng-html2js `pwd`/spec/test.tmpl -b spec/", {silent: true});
-          var fileContents = cat("spec/expectedTestTmplJsWithoutBaseDir");
-          expect(returnValue.output).toEqual(fileContents);
+        var returnValue = exec("./bin/ng-html2js `pwd`/spec/test.tmpl -b spec/", {silent: true});
+        var fileContents = cat("spec/expectedTestTmplJsWithoutBaseDir");
+        expect(returnValue.output).toEqual(fileContents);
       });
     });
 
     describe('when the user provides a relative subpath to the input file and a relative subpath to be stripped from the file name', function() {
       it('does not strip the subpath from the file name', function() {
-          var returnValue = exec("./bin/ng-html2js spec/test.tmpl -b spec/", {silent: true});
-          var fileContents = cat("spec/expectedTestTmplJs");
-          expect(returnValue.output).toEqual(fileContents);
+        var returnValue = exec("./bin/ng-html2js spec/test.tmpl -b spec/", {silent: true});
+        var fileContents = cat("spec/expectedTestTmplJs");
+        expect(returnValue.output).toEqual(fileContents);
+      });
+    });
+  });
+
+  describe('stripping an arbitrary subpath from the name of the template file', function() {
+    it('can be performed by providing the flag "-s <prefix>"', function() {
+      var returnValue = exec("./bin/ng-html2js spec/test.tmpl -s spec/", {silent: true});
+      var fileContents = cat("spec/expectedTestTmplJsStrippedPrefix");
+      expect(returnValue.output).toEqual(fileContents);
+    });
+
+    it('can be performed by providing the flag "--strip-prefix <prefix>"', function() {
+      var returnValue = exec("./bin/ng-html2js spec/test.tmpl -s spec/", {silent: true});
+      var fileContents = cat("spec/expectedTestTmplJsStrippedPrefix");
+      expect(returnValue.output).toEqual(fileContents);
+    });
+
+    describe('when the arbitrary prefix to strip does not match characters starting from the beginning of the input file name', function() {
+      it('does not strip the prefix', function() {
+        var returnValue = exec("./bin/ng-html2js spec/test.tmpl -s pec/", {silent: true});
+        var fileContents = cat("spec/expectedTestTmplJs");
+        expect(returnValue.output).toEqual(fileContents);
+      });
+    });
+
+    describe('when the prefix does not match at all', function() {
+      it('does not strip the prefix', function() {
+        var returnValue = exec("./bin/ng-html2js spec/test.tmpl -s bananagrams", {silent: true});
+        var fileContents = cat("spec/expectedTestTmplJs");
+        expect(returnValue.output).toEqual(fileContents);
+      });
+    });
+
+    describe('when the prefix to strip is a complete match of the input file name', function() {
+      it('does not strip the prefix', function() {
+        var returnValue = exec("./bin/ng-html2js spec/test.tmpl -s spec/test.tmpl", {silent: true});
+        var fileContents = cat("spec/expectedTestTmplJs");
+        expect(returnValue.output).toEqual(fileContents);
       });
     });
   });
