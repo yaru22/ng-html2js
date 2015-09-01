@@ -1,0 +1,18 @@
+var module;
+try {
+  module = angular.module('foo');
+} catch (e) {
+  module = angular.module('foo', []);
+}
+
+module.run(['$templateCache', function ($templateCache) {
+  $templateCache.put('spec/test.tmpl',
+    '<div>\n' +
+    '  hello world\n' +
+    '  <div ng-repeat="item in items">\n' +
+    '    {{ item }} it\'s value is great\n' +
+    '  </div>\n' +
+    '</div>\n' +
+    '');
+}]);
+

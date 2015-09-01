@@ -3,7 +3,6 @@
     "name": "Brian Park",
     "email": "yaru22@gmail.com"
   },
-
   "name": "ng-html2js",
   "description": "Standalone script to turn Angular template into js and put it in a module.",
   "version": "2.0.0",
@@ -12,22 +11,19 @@
     "type": "git",
     "url": "git@github.com:yaru22/ng-html2js.git"
   },
-
   "keywords": [
     "angular",
     "template",
     "html2js"
   ],
-
   "main": "./src/html2js.js",
   "dependencies": {
     "optimist": "*"
   },
   "devDependencies": {
-    "should": "~1.3.0",
-    "mocha": "~1.13.0"
+    "jasmine": "^2.3.2",
+    "shelljs": "0.5.3"
   },
-
   "bin": {
     "ng-html2js": "./bin/ng-html2js"
   },

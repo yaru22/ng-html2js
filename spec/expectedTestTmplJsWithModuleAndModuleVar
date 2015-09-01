@@ -6,7 +6,7 @@ try {
 }
 
 ngModule.run(['$templateCache', function ($templateCache) {
-  $templateCache.put('test/test.tmpl',
+  $templateCache.put('spec/test.tmpl',
     '<div>\n' +
     '  hello world\n' +
     '  <div ng-repeat="item in items">\n' +
@@ -15,3 +15,4 @@ ngModule.run(['$templateCache', function ($templateCache) {
     '</div>\n' +
     '');
 }]);
+
