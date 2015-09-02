@@ -14,27 +14,95 @@ describe('ng-html2js', function() {
     expect(testFileContents).toEqual(outputFileContents);
   });
 
-  describe('providing the flag -m <module_name>', function() {
-    it('converts the html file into a js object with a chosen module name', function() {
+  describe('choosing a module name', function() {
+    it('can be performed by providing the flag "-m <module-name>"', function() {
       var returnValue = exec("./bin/ng-html2js spec/test.tmpl -m foo", {silent: true});
+      var fileContents = cat("spec/expectedTestTmplJsWithModule");
+      expect(returnValue.output).toEqual(fileContents);
+    });
+
+    it('can be performed by providing the flag "--module <module-name>"', function() {
+      var returnValue = exec("./bin/ng-html2js spec/test.tmpl --module foo", {silent: true});
       var fileContents = cat("spec/expectedTestTmplJsWithModule");
       expect(returnValue.output).toEqual(fileContents);
     });
   });
 
-  describe('providing the flag --module-var <variable_name>', function() {
-    it('converts the html file into a js object with a chosen module name', function() {
+  describe('choosing a module variable', function() {
+    it('can be performed by providing the flag "--module-var <module-variable>"', function() {
       var returnValue = exec("./bin/ng-html2js spec/test.tmpl --module-var ngModule", {silent: true});
       var fileContents = cat("spec/expectedTestTmplJsWithModuleVar");
       expect(returnValue.output).toEqual(fileContents);
     });
   });
 
-  describe('providing the flag --module-var <variable_name>', function() {
-    it('converts the html file into a js object with a chosen module name', function() {
+  describe('choosing a module variable and a module name', function() {
+    it('can be performed by providing the -m and --module-var flags', function() {
       var returnValue = exec("./bin/ng-html2js spec/test.tmpl -m foo --module-var ngModule", {silent: true});
       var fileContents = cat("spec/expectedTestTmplJsWithModuleAndModuleVar");
       expect(returnValue.output).toEqual(fileContents);
+    });
+
+    it('can be performed by providing the --module and --module-var flags', function() {
+      var returnValue = exec("./bin/ng-html2js spec/test.tmpl --module foo --module-var ngModule", {silent: true});
+      var fileContents = cat("spec/expectedTestTmplJsWithModuleAndModuleVar");
+      expect(returnValue.output).toEqual(fileContents);
+    });
+  });
+
+  describe('stripping part of the path from the template name using the -b or --basedir flag', function() {
+    it('can be performed by providing the flag "-b <subpath>"', function() {
+      var returnValue = exec("./bin/ng-html2js `pwd`/spec/test.tmpl -b `pwd`/spec", {silent: true});
+      var fileContents = cat("spec/expectedTestTmplJsWithoutBaseDir");
+      expect(returnValue.output).toEqual(fileContents);
+    });
+
+    it('can be performed by providing the flag "--basedir <subpath>"', function() {
+      var returnValue = exec("./bin/ng-html2js `pwd`/spec/test.tmpl --basedir `pwd`/spec", {silent: true});
+      var fileContents = cat("spec/expectedTestTmplJsWithoutBaseDir");
+      expect(returnValue.output).toEqual(fileContents);
+    });
+
+    describe('when a user provides an absolute path to the input file and an absolute subpath to be stripped from the file name', function() {
+      describe('when the user excludes the trailing slash from the subpath to be stripped', function() {
+        it('strips the provided subpath completely from the file name', function() {
+          var returnValue = exec("./bin/ng-html2js `pwd`/spec/test.tmpl -b `pwd`/spec", {silent: true});
+          var fileContents = cat("spec/expectedTestTmplJsWithoutBaseDir");
+          expect(returnValue.output).toEqual(fileContents);
+        });
+      });
+
+      describe('when the user includes the trailing slash in the subpath to be stripped', function() {
+        it('strips the subpath but leaves the trailing slash in the file name', function() {
+          var returnValue = exec("./bin/ng-html2js `pwd`/spec/test.tmpl -b `pwd`/spec/", {silent: true});
+          var fileContents = cat("spec/expectedTestTmplJsWithoutBaseDir");
+          expect(returnValue.output).toEqual(fileContents);
+        });
+      });
+    });
+
+    describe('when the user provides a relative path to the input file and an absolute subpath to be stripped from the file name', function() {
+      it('does not strip anything from the file name', function() {
+          var returnValue = exec("./bin/ng-html2js spec/test.tmpl -b `pwd`/spec/", {silent: true});
+          var fileContents = cat("spec/expectedTestTmplJs");
+          expect(returnValue.output).toEqual(fileContents);
+      });
+    });
+
+    describe('when the user provides an absolute path to the input file and a relative subpath to be stripped from the file name', function() {
+      it('strips the provided relative subpath from the file name but keeps the trailing slash', function() {
+          var returnValue = exec("./bin/ng-html2js `pwd`/spec/test.tmpl -b spec/", {silent: true});
+          var fileContents = cat("spec/expectedTestTmplJsWithoutBaseDir");
+          expect(returnValue.output).toEqual(fileContents);
+      });
+    });
+
+    describe('when the user provides a relative subpath to the input file and a relative subpath to be stripped from the file name', function() {
+      it('does not strip the subpath from the file name', function() {
+          var returnValue = exec("./bin/ng-html2js spec/test.tmpl -b spec/", {silent: true});
+          var fileContents = cat("spec/expectedTestTmplJs");
+          expect(returnValue.output).toEqual(fileContents);
+      });
     });
   });
 });
