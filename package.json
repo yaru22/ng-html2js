@@ -28,6 +28,6 @@
     "ng-html2js": "./bin/ng-html2js"
   },
   "scripts": {
-    "test": "mocha --require should --reporter spec"
+    "test": "`npm bin`/jasmine"
   }
 }
